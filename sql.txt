@@ -1,0 +1,69 @@
+drop database if EXISTS works;
+create database works DEFAULT charset=GBK;
+
+use works;
+CREATE TABLE userinfo
+(
+username nvarchar(50) PRIMARY key,
+password nvarchar(50) not null,
+qq nvarchar(12),
+email nvarchar(50),
+type nchar(10) not null,
+userimg nvarchar(250)
+);
+
+CREATE TABLE Acitvity
+(
+activityid int(4) PRIMARY key,
+activityname nvarchar(125) not null,
+endtime datetime(8) not null,
+activitypicture nvarchar(250) not null,
+activityintroduction nvarchar(8000),
+summary nvarchar(250),
+activityverify nchar(10) not null default'´ýÉóºË',
+activitystatus nchar(10),
+username nvarchar(50) not null
+);
+
+create table workinfo
+(
+workid int(4) primary key,
+workname nvarchar(50) not null,
+workpicture nvarchar(250) not null,
+uploadtime datetime(6) not null,
+workintrodution nvarchar(8000),
+workverify nchar(10) not null default'´ýÉóºË',
+username nvarchar(50) not null,
+activetyname nvarchar(125),
+recommend nchar(2) not null DEFAULT'·ñ',
+recommendtime datetime(6)
+);
+
+create TABLE Comment
+(
+commentid int(4) primary key,
+workid int(4) not null,
+workname nvarchar(50) not null,
+username nvarchar(50) not null,
+commentcontent nvarchar(8000) not null,
+commenttime datetime(6) not null
+);
+
+create table image
+(
+imgid int(4) primary key,
+imgurl nvarchar(50) not null,
+imgtext nvarchar(50) not null,
+imglink nvarchar(100) not null,
+imgalt nvarchar(50) not null
+)
+
+alter table workinfo
+add foreign key(username) references userinfo(username)
+
+alter table comment
+add foreign key(workid) references workinfo(workid),
+add foreign key(username) references userinfo(username)
+
+alter table Acitvity
+add foreign key(username) references userinfo(username)
